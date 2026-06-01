@@ -7,22 +7,22 @@
 ##使用方法
 在你想放项目的目录里执行：
 
-'''
+```
 cd D:\project
 git clone https://github.com/zhangsm89/phoneme-collection-web.git
-'''
+```
 
 进入项目：
 
-'''
+```
 cd D:\project\phoneme-collection-web
-'''
+```
 
 运行：
 
-'''
+```
 python server.py
-'''
+```
 
 然后浏览器打开：
 

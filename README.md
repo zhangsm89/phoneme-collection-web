@@ -1,8 +1,7 @@
-<<<<<<< HEAD
-# phoneme-collection-app
-Webpage for Monosyllable Speech Collection &amp; Annotation
+
+# phoneme-collection-app 音位对比能力数据采集网页
+## Webpage for Monosyllable Speech Collection &amp; Annotation
 =======
-# 音位对比能力数据采集网页
 
 本地运行的“治疗师监督 + 浏览器录音 + 自动质控 + 后台标注”原型。前端使用浏览器麦克风 API，后端使用 Python 标准库保存数据到 `data/`。
 

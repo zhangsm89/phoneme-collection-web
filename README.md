@@ -3,20 +3,27 @@
 ## Webpage for Monosyllable Speech Collection &amp; Annotation
 
 本地运行的“治疗师监督 + 浏览器录音 + 自动质控 + 后台标注”原型。前端使用浏览器麦克风 API，后端使用 Python 标准库保存数据到 `data/`。
+
 ##使用方法
 在你想放项目的目录里执行：
+
 '''
 cd D:\project
 git clone https://github.com/zhangsm89/phoneme-collection-web.git
 '''
+
 进入项目：
+
 '''
 cd D:\project\phoneme-collection-web
 '''
+
 运行：
+
 '''
 python server.py
 '''
+
 然后浏览器打开：
 
 http://127.0.0.1:8765/

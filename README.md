@@ -15,7 +15,7 @@ git clone https://github.com/zhangsm89/phoneme-collection-web.git
 进入项目：
 
 ```
-cd D:\project\phoneme-collection-web
+cd .\phoneme-collection-web
 ```
 
 运行：

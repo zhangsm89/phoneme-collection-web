@@ -1,0 +1,316 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>音位对比能力数据采集</title>
+    <link rel="stylesheet" href="/styles.css">
+  </head>
+  <body>
+    <header class="topbar">
+      <div>
+        <h1>音位对比能力数据采集</h1>
+      </div>
+      <nav class="role-switch" aria-label="角色">
+        <button class="role active" data-role="patient">患者端</button>
+        <button class="role" data-role="therapist">治疗师端</button>
+        <button class="role" data-role="admin">标注员端</button>
+      </nav>
+    </header>
+
+    <main>
+      <section class="workspace">
+        <aside class="rail">
+          <div class="status-card">
+            <span class="label">当前被试</span>
+            <strong id="currentSubject">未创建</strong>
+            <span id="currentSession">session 未开始</span>
+          </div>
+          <ol class="steps">
+            <li class="done">登录与知情同意</li>
+            <li id="deviceStep">设备与环境检测</li>
+            <li id="taskStep">正式任务</li>
+            <li id="labelStep">后台标注</li>
+          </ol>
+        </aside>
+
+        <section class="panel role-panel" id="patientPanel">
+          <h2>登录与知情同意</h2>
+          <form id="subjectForm" class="grid-form">
+            <label>匿名被试 ID<input name="subject_id" value="S0001" required></label>
+            <label>性别
+              <select name="sex">
+                <option value="female">女</option>
+                <option value="male">男</option>
+                <option value="other">其他/不便说明</option>
+              </select>
+            </label>
+            <label>出生年月<input name="birth_month" type="month" required></label>
+            <label>评估日期<input name="assessment_date" type="date" required></label>
+            <label>母语/方言<input name="dialect" placeholder="如普通话、贵州方言"></label>
+            <label>普通话使用频率
+              <select name="mandarin_frequency">
+                <option>每天</option><option>每周</option><option>偶尔</option><option>很少</option>
+              </select>
+            </label>
+            <label>教育程度<input name="education" placeholder="如小学/初中/高中/大学"></label>
+            <label>识字能力
+              <select name="literacy">
+                <option>可独立阅读</option><option>需要协助</option><option>不识字/无法阅读</option>
+              </select>
+            </label>
+            <fieldset>
+              <legend>知情同意</legend>
+              <label><input type="checkbox" name="consent_research"> 用于科研</label>
+              <label><input type="checkbox" name="consent_private_dataset"> 进入非公开数据集</label>
+              <label><input type="checkbox" name="consent_public_dataset"> 进入公开数据集</label>
+            </fieldset>
+            <fieldset class="clinical-grid">
+              <legend>临床信息</legend>
+              <label>构音障碍类型
+                <select name="clinical_dysarthria_type">
+                  <option value="">未评估/未知</option>
+                  <option>痉挛型</option>
+                  <option>弛缓型</option>
+                  <option>共济失调型</option>
+                  <option>运动过少型</option>
+                  <option>运动过多型</option>
+                  <option>混合型</option>
+                  <option>疑似言语失用为主</option>
+                </select>
+              </label>
+              <label>严重度
+                <select name="clinical_severity">
+                  <option value="">未评估</option>
+                  <option>无明显异常</option>
+                  <option>轻度</option>
+                  <option>中度</option>
+                  <option>重度</option>
+                  <option>极重度</option>
+                </select>
+              </label>
+              <label>是否伴随失语
+                <select name="aphasia">
+                  <option>否</option><option>疑似</option><option>是</option><option>未评估</option>
+                </select>
+              </label>
+              <label>认知障碍
+                <select name="cognitive_impairment">
+                  <option>否</option><option>轻度</option><option>中重度</option><option>未评估</option>
+                </select>
+              </label>
+              <label>吞咽障碍
+                <select name="dysphagia">
+                  <option>否</option><option>疑似</option><option>是</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口腔结构异常
+                <select name="oral_structure">
+                  <option>未见明显异常</option><option>牙列/缺牙影响</option><option>舌体结构异常</option><option>唇腭结构异常</option><option>其他</option>
+                </select>
+              </label>
+              <label>腭咽闭合问题
+                <select name="velopharyngeal_closure">
+                  <option>未见明显异常</option><option>疑似闭合不全</option><option>鼻漏气明显</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口颜面运动：鼓腮
+                <select name="orofacial_puff">
+                  <option>正常</option><option>减弱</option><option>不能完成</option><option>摸索</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口颜面运动：吹气
+                <select name="orofacial_blow">
+                  <option>正常</option><option>减弱</option><option>不能完成</option><option>摸索</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口颜面运动：咂唇
+                <select name="orofacial_lip_smack">
+                  <option>正常</option><option>减弱</option><option>不能完成</option><option>摸索</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口颜面运动：缩拢嘴唇
+                <select name="orofacial_pucker">
+                  <option>正常</option><option>减弱</option><option>不能完成</option><option>摸索</option><option>未评估</option>
+                </select>
+              </label>
+              <label>口颜面运动：摆舌
+                <select name="orofacial_tongue_lateral">
+                  <option>正常</option><option>减弱</option><option>不能完成</option><option>摸索</option><option>未评估</option>
+                </select>
+              </label>
+              <label>言语失用筛查
+                <select name="apraxia_result">
+                  <option>未见明显异常</option><option>疑似</option><option>明确存在</option><option>未评估</option>
+                </select>
+              </label>
+            </fieldset>
+            <div class="form-actions">
+              <button type="submit">保存被试并开始</button>
+            </div>
+          </form>
+        </section>
+
+        <section class="panel role-panel hidden" id="therapistPanel">
+          <div class="split-heading">
+            <div>
+              <h2>设备与正式采集</h2>
+              <p>先完成麦克风授权、静音噪声和试录检测，再进入随机化任务。</p>
+            </div>
+            <button id="newSessionBtn">新建 Session</button>
+          </div>
+
+          <section class="qc-grid">
+            <div>
+              <h3>设备检测</h3>
+              <label>设备类型
+                <select id="deviceType">
+                  <option>电脑内置麦克风</option>
+                  <option>耳机麦</option>
+                  <option>外接麦</option>
+                  <option>其他</option>
+                </select>
+              </label>
+              <div class="button-row">
+                <button id="micBtn">获取麦克风权限</button>
+                <button id="silenceBtn">采集 5 秒静音</button>
+                <button id="testRecordBtn">试录“我准备好了”</button>
+              </div>
+              <dl class="metrics">
+                <div><dt>环境噪声</dt><dd id="noiseMetric">未检测</dd></div>
+                <div><dt>试录音量</dt><dd id="volumeMetric">未检测</dd></div>
+                <div><dt>SNR</dt><dd id="snrMetric">未检测</dd></div>
+                <div><dt>削波</dt><dd id="clipMetric">未检测</dd></div>
+              </dl>
+            </div>
+            <div>
+              <h3>任务设置</h3>
+              <label>重复次数
+                <select id="repetitions"><option>2</option><option>3</option><option>1</option></select>
+              </label>
+              <label>随机种子<input id="randomSeed" value="20260528"></label>
+              <label><input id="reduceFatigue" type="checkbox"> 疲劳，减少重复</label>
+              <div class="button-row">
+                <button id="buildTaskBtn">生成随机任务</button>
+                <button id="exportBtn">刷新后台记录</button>
+              </div>
+              <p class="hint" id="taskSummary">尚未生成任务</p>
+            </div>
+          </section>
+
+          <section class="trial-area">
+            <div class="stimulus">
+              <div class="stimulus-mode" id="promptModeText">汉字提示</div>
+              <div class="word-cue" id="wordCue">词</div>
+              <div class="stimulus-meta" id="stimulusMeta">等待任务</div>
+              <canvas id="waveCanvas" width="720" height="160"></canvas>
+              <div class="meter"><span id="meterBar"></span></div>
+              <p id="liveQc" class="qc-text">未录音</p>
+            </div>
+            <div class="trial-controls">
+              <p class="step-guidance" id="therapistStepHint">请按步骤完成设备检测并生成随机任务。</p>
+              <div class="button-row">
+                <button id="startBtn">开始录音</button>
+                <button id="stopBtn" disabled>停止</button>
+                <button id="retryBtn">重录当前字</button>
+                <button id="prevBtn">上一题</button>
+                <button id="nextBtn">保存当前字并下一题</button>
+                <button id="saveSessionBtn">保存此session</button>
+              </div>
+              <p class="shortcut-hint">点击“开始录音”后读第一个字；之后按 → 保存当前字并自动开始下一个字；需要修改时点“重录当前字”。</p>
+              <fieldset class="marks">
+                <legend>治疗师即时标记</legend>
+                <label><input type="radio" name="instantMark" value="correct" checked> 正确</label>
+                <label><input type="radio" name="instantMark" value="suspected_error"> 疑似错误</label>
+                <label><input type="radio" name="instantMark" value="unable"> 无法完成</label>
+                <label><input type="checkbox" id="completedAfterCue"> 提示后完成</label>
+                <label><input type="checkbox" id="fatigueMark"> 疲劳</label>
+                <label><input type="checkbox" id="attentionMark"> 注意力不集中</label>
+              </fieldset>
+            </div>
+          </section>
+        </section>
+
+        <section class="panel role-panel hidden" id="adminPanel">
+          <div class="split-heading">
+            <div>
+              <h2>标注员端</h2>
+              <p>先选择 session，再选择音频记录；右侧完成感知发音、错误类型、标注者和复核/仲裁字段。</p>
+            </div>
+            <button id="reloadRecordsBtn">刷新记录</button>
+          </div>
+          <div class="annotation-layout">
+            <div class="annotation-sidebar">
+              <h3>所有 session</h3>
+              <div class="session-list" id="sessionList"></div>
+              <h3>录音样本</h3>
+              <div class="record-list" id="recordList"></div>
+            </div>
+            <div class="annotation-panel">
+              <audio id="audioPlayer" controls></audio>
+              <img id="spectrogramImage" class="spectrogram-image" alt="语谱图与共振峰标记">
+              <div id="spectrogramStatus" class="spectrogram-placeholder">选择一条录音后生成语谱图和 F1/F2/F3 共振峰轨迹。</div>
+              <form id="annotationForm" class="annotation-form">
+                <section class="annotation-card target-pronunciation">
+                  <h3>目标发音</h3>
+                  <div class="summary-grid">
+                    <label>目标词<input id="annWord" readonly></label>
+                    <label>目标音<input id="annTarget" readonly></label>
+                    <label>声母<input id="annInitial" readonly></label>
+                    <label>韵母<input id="annFinal" readonly></label>
+                    <label>声调<input id="annTone" readonly></label>
+                  </div>
+                </section>
+                <section class="annotation-card quick-label">
+                  <h3>快速标注</h3>
+                  <div class="annotation-actions">
+                    <button type="button" id="deleteSampleBtn">建议重录</button>
+                  </div>
+                  <section class="error-label-block">
+                    <h4>发音错误</h4>
+                    <div class="perceived-grid">
+                      <label>实发声母<input id="annActualInitial" placeholder="如 b / p / 零声母"></label>
+                      <label>实发韵母<input id="annActualFinal" placeholder="如 ao"></label>
+                      <label>实发声调
+                        <select id="annActualTone">
+                          <option value="">未标</option>
+                          <option value="1">一声</option>
+                          <option value="2">二声</option>
+                          <option value="3">三声</option>
+                          <option value="4">四声</option>
+                          <option value="0">轻声/无声调</option>
+                        </select>
+                      </label>
+                      <label>整体实发音<input id="annActual" placeholder="如 bao1 / IPA / 自定义标签"></label>
+                    </div>
+                    <div class="chip-grid" id="errorTypeChips">
+                      <button type="button" data-value="substitution">替代</button>
+                      <button type="button" data-value="omission">遗漏</button>
+                      <button type="button" data-value="distortion">歪曲</button>
+                      <button type="button" data-value="addition">添加</button>
+                      <button type="button" data-value="tone_error">声调错误</button>
+                      <button type="button" data-value="nasalization_abnormal">鼻化异常</button>
+                      <button type="button" data-value="aspiration_abnormal">送气异常</button>
+                    </div>
+                  </section>
+                  <input id="annErrorType" type="hidden">
+                  <label class="annotator-field">标注者<input id="annAnnotator" placeholder="默认沿用上一次"></label>
+                </section>
+                <section class="annotation-card review-block">
+                  <h3>复核与仲裁</h3>
+                  <label>复核标注者<input id="annReviewer" placeholder="默认沿用上一次"></label>
+                  <label class="wide">仲裁结论<input id="annAdjudication"></label>
+                </section>
+                <div class="form-actions">
+                  <button type="submit">保存标注副本</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </section>
+      </section>
+    </main>
+
+    <script src="/app.js"></script>
+  </body>
+</html>
